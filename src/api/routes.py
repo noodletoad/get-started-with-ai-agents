@@ -209,26 +209,26 @@ async def get_result(
             logger.info(f"get_result invoked for conversation={conversation.id}")
             input_created_at = datetime.now(timezone.utc).timestamp()
             try:
-                response = await openai_client.responses.create(
+                async with openai_client.responses.stream(
+                    model=os.getenv('AZURE_AI_EMBED_DEPLOYMENT_NAME'),
                     conversation=conversation.id,
                     input=user_message,
                     extra_body={"agent": AgentReference(name=agent.name, version=agent.version).as_dict()},
-                    stream=True
-                )
-                logger.info("Successfully created stream; starting to process events")
-                async for event in response:
-                    if event.type == "response.created":
-                        logger.info(f"Stream response created with ID: {event.response.id}")
-                    elif event.type == "response.output_text.delta":
-                        logger.info(f"Delta: {event.delta}")
-                        stream_data = {'content': event.delta, 'type': "message"}
-                        yield serialize_sse_event(stream_data)
-                    elif event.type == "response.output_item.done" and event.item.type == "message":
-                        stream_data = await get_message_and_annotations(event.item)
-                        stream_data['type'] = "completed_message"
-                        yield serialize_sse_event(stream_data)
-                    elif event.type == "response.completed":
-                        logger.info(f"Response completed with full message: {event.response.output_text}")
+                ) as response_in_stream:
+                    logger.info("Successfully created stream; starting to process events")
+                    async for event in response_in_stream:                            
+                        if event.type == "response.created":
+                            logger.info(f"Stream response created with ID: {event.response.id}")
+                        elif event.type == "response.output_text.delta":
+                            logger.info(f"Delta: {event.delta}")
+                            stream_data = {'content': event.delta, 'type': "message"}
+                            yield serialize_sse_event(stream_data)
+                        elif event.type == "response.output_item.done" and event.item.type == "message":
+                            stream_data = await get_message_and_annotations(event.item)
+                            stream_data['type'] = "completed_message"
+                            yield serialize_sse_event(stream_data)
+                        elif event.type == "response.completed":
+                            logger.info(f"Response completed with full message: {event.response.output_text}")
                                                         
             except Exception as e:
                 logger.exception(f"Exception in get_result: {e}")
