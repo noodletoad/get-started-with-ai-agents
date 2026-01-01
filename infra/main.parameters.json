@@ -12,13 +12,13 @@
       "value": "${AZURE_PRINCIPAL_ID}"
     },
     "resourceGroupName": {
-      "value": "${AZURE_RESOURCE_GROUP}"
+      "value": "${AZURE_RESOURCE_GROUP=nth-product-ai-rg}"
     },
     "aiHubName": {
-      "value": "${AZURE_AIHUB_NAME}"
+      "value": "${AZURE_AIHUB_NAME-nth-ai-hub}"
     },
     "aiProjectName": {
-      "value": "${AZURE_AIPROJECT_NAME}"
+      "value": "${AZURE_AIPROJECT_NAME=nth-product-ai-app}"
     },
     "aiServicesName": {
       "value": "${AZURE_AISERVICES_NAME}"
@@ -27,7 +27,7 @@
       "value": "${AZURE_SEARCH_SERVICE_NAME}"
     },
     "applicationInsightsName": {
-      "value": "${AZURE_APPLICATION_INSIGHTS_NAME}"
+      "value": "${AZURE_APPLICATION_INSIGHTS_NAME=nth-product-ai-appinsights}"
     },
     "containerRegistryName": {
       "value": "${AZURE_CONTAINER_REGISTRY_NAME}"
@@ -39,7 +39,7 @@
       "value": "${AZURE_STORAGE_ACCOUNT_NAME}"
     },
     "logAnalyticsWorkspaceName": {
-      "value": "${AZURE_LOG_ANALYTICS_WORKSPACE_NAME}"
+      "value": "${AZURE_LOG_ANALYTICS_WORKSPACE_NAME=nth-product-ai-loganalytics}"
     },
     "useContainerRegistry": {
       "value": "${USE_CONTAINER_REGISTRY=true}"
@@ -51,7 +51,7 @@
       "value": "${USE_AZURE_AI_SEARCH_SERVICE=false}"
     },
     "agentName": {
-      "value": "${AZURE_AI_AGENT_NAME=agent-template-assistant}"
+      "value": "${AZURE_AI_AGENT_NAME=nth-product-ai-agent}"
     },
     "aiAgentID": {
       "value": "${AZURE_AI_AGENT_ID}"
@@ -60,16 +60,16 @@
       "value": "${AZURE_EXISTING_AGENT_ID}"
     },
     "agentDeploymentName": {
-      "value": "${AZURE_AI_AGENT_MODEL_NAME=gpt-5-mini}"
+      "value": "${AZURE_AI_AGENT_MODEL_NAME=nth-vs-DeepSeek-V3.1}"
     },
     "agentModelFormat": {
       "value": "${AZURE_AI_AGENT_MODEL_FORMAT=OpenAI}"
     },
     "agentModelName": {
-      "value": "${AZURE_AI_AGENT_MODEL_NAME=gpt-5-mini}"
+      "value": "${AZURE_AI_AGENT_MODEL_NAME=DeepSeek-V3.1}"
     },
     "agentModelVersion": {
-      "value": "${AZURE_AI_AGENT_MODEL_VERSION=2025-08-07}"
+      "value": "${AZURE_AI_AGENT_MODEL_VERSION=1}"
     },
     "agentDeploymentSku": {
       "value": "${AZURE_AI_AGENT_DEPLOYMENT_SKU=GlobalStandard}"
